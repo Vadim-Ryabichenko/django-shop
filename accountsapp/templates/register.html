@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class = "reg">
+    <h1>Create new Account</h1>
+    <h3>Please, sign up using the following form:</h3>
+    <form method="post">
+        {% csrf_token %}
+      
+       <h3><label>{{ form.username.label }}</label></h3>
+        {{ form.username }}
+      
+        <h3><label>{{ form.password.label }}</label></h3>
+        {{ form.password }}
+      
+        <h3><label>{{ form.email.label }}</label></h3>
+        {{ form.email }}
+
+        <h3><label>{{ form.first_name.label }}</label></h3>
+        {{ form.first_name }}
+
+        <h3><label>{{ form.last_name.label }}</label></h3>
+        {{ form.last_name }}
+    
+      <br>
+      <br>
+        <input type="submit" value="Reg It">
+      </form>
+      <a href="{% url 'login_page' %}"><h3>If you have an account, please login!</h3></a>
+</div>
+{% endblock %}

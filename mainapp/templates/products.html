@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class = "ppp2">
+    {% for product in object_list %}
+    <div class = "rrr2">
+        <a href="{% url 'product_detail' pk=product.pk %}"><h2>{{ product.name }}</h2></a><h3>Price:{{ product.price }}<br>Count:{{ product.count_in_storage }}</h3>
+        {% if request.user.is_superuser %}
+        <form method="post" action="{% url 'update_product' product.pk %}">
+            {% csrf_token %}
+            <input type="submit" value="Update">
+        </form>  
+        {% endif %}
+    </div>  
+    {% endfor %}
+</div>
+{% endblock %}

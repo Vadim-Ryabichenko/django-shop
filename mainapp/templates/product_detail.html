@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>{{product.name}}</h1>
+<div class = "deta">
+<h3>{{product.text}}</h3>
+<h3>Product price is {{product.price}}</h3>
+<h3>Left in stock {{product.count_in_storage}} units</h3>
+</div>
+{% endblock %}

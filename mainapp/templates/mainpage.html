@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>We are pleased to welcome you to our online store, which specializes in the sale of sports cocktails</h1>
+<div class = "mainh3">
+<h3>Sports supplements are essentially “concentrated foods” that contain the same ingredients as regular food. The meaning of “concentration” is that regular food can be absorbed by the body in about 4 hours, and sports supplements can be absorbed faster, more completely and with minimal digestion costs</h3>
+<h3>The energy value of such additives is quite high. However, it should be understood that sports nutrition is not called a supplement for a reason - it is intended to be added to the diet, but should not form its basis</h3>
+</div>
+<div class="slideshow-container">
+    <div class="mySlides fade">
+      <div class="numbertext">1 / 3</div>
+      <img src="static/css/first.jpeg" style="width:100%">
+      <div class="text">Welcome</div>
+    </div>
+  
+    <div class="mySlides fade">
+      <div class="numbertext">2 / 3</div>
+      <img src="static/css/second.jpg" style="width:100%">
+      <div class="text">Online store</div>
+    </div>
+  
+    <div class="mySlides fade">
+      <div class="numbertext">3 / 3</div>
+      <img src="static/css/third.jpg" style="width:100%">
+      <div class="text">Vremby Shop</div>
+    </div>
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+  <br>
+  <div style="text-align:center">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+  </div>
+<div class = "mainh3">
+<h3>We invite you to get acquainted with our <a href="{% url 'products' %}">products</a></h3>
+</div>
+{% endblock %}

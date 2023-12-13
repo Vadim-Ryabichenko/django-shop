@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link type="image/x-icon" href="{% static 'food.ico' %}" rel="shortcut icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src={% static 'js/main.js' %}></script>
+</head>
+<body>
+    <header>
+        <div class="four">
+            <h1>~Vremby***Shop~</h1>
+        </div>
+        <nav>
+            <a href="{% url 'products' %}">|Products|</a>
+            <a href="{% url 'create_product' %}">|Create product|</a>
+            <a href="{% url 'login_page' %}">|Login|</a>
+            <a href="{% url 'register_page' %}">|Registration|</a>
+        </nav>
+    </header>
+    <div class = 'main_content'>
+    {% block content %}
+    {% endblock %}
+    </div>
+    <footer>
+        <nav>
+            <a href="{% url 'logout_page' %}">|Logout|</a>
+            <a href="{% url 'about_shop' %}">|About Shop|</a>
+            <a href="https://www.instagram.com/vremby_4595/"><i class="fa fa-instagram fa-2x"></i>Creator_inst</a>
+        </nav>
+    </footer>
+</body>
+</html>

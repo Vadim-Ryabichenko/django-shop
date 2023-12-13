@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class = "mainh3">
+<h1>I wish you inspiration to update this product</h1>
+<form method="post">
+    <h3>{{ form.as_p }}</h3>
+    {% csrf_token %}
+    <button type="submit">Update</button>
+</form>
+</div>
+{% endblock %}
