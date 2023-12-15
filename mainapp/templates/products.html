@@ -9,11 +9,13 @@
         {% if request.user.is_superuser %}
         <a href="{% url 'update_product' product.pk %}"><button>Update</button></a>
         {% endif %}
+        {% if user.is_authenticated %}
         <form method="POST" action="{% url 'purchases' %}">
             {% csrf_token %}
             <input type="number" name="Count" min="1" max="{{ product.count_in_storage }}" required>
             <button type="submit">Buy</button>
         </form>
+        {% endif %}
     </div>  
     {% endfor %}
 </div>

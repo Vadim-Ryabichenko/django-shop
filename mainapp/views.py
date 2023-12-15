@@ -63,7 +63,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return initial
  
 
-class ReturnListView(ListView):
+class ReturnListView(LoginRequiredMixin, ListView):
     model = Return
     template_name = 'returns.html'
     queryset = Return.objects.all()
