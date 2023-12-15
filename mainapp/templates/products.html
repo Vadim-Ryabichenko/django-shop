@@ -7,12 +7,15 @@
     <div class = "rrr2">
         <a href="{% url 'product_detail' pk=product.pk %}"><h2>{{ product.name }}</h2></a><h3>Price:{{ product.price }}<br>Count:{{ product.count_in_storage }}</h3>
         {% if request.user.is_superuser %}
-        <form method="post" action="{% url 'update_product' product.pk %}">
-            {% csrf_token %}
-            <input type="submit" value="Update">
-        </form>  
+        <a href="{% url 'update_product' product.pk %}"><button>Update</button></a>
         {% endif %}
+        <form method="POST" action="{% url 'purchases' %}">
+            {% csrf_token %}
+            <input type="number" name="Count" min="1" max="{{ product.count_in_storage }}" required>
+            <button type="submit">Buy</button>
+        </form>
     </div>  
     {% endfor %}
 </div>
 {% endblock %}
+

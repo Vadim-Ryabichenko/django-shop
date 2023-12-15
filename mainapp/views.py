@@ -1,10 +1,12 @@
-from .models import Product
+from .models import Product, Return, Purchase
+from accountsapp.models import Client
 from django.views.generic import ListView, TemplateView, View, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from .forms import ProductForm
 from django.shortcuts import redirect
+from django.contrib import messages
 
 
 
@@ -19,7 +21,6 @@ class AboutView(TemplateView):
 class ProductListView(ListView):
     model = Product
     template_name = 'products.html'
-    http_method_names = ['get']
     extra_context = {'products' : Product.objects.all()}
     queryset = Product.objects.all()
     success_url = 'products'
@@ -62,3 +63,69 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return initial
  
 
+class ReturnListView(ListView):
+    model = Return
+    template_name = 'returns.html'
+    queryset = Return.objects.all()
+    context_object_name = 'returns'
+
+
+class ReturnConfirmView(View):
+    def post(self, request, return_id):
+        return_obj = Return.objects.get(id=return_id)
+        return_obj.purchase.delete()
+        for product in return_obj.purchase.product.all():
+            product.count_in_storage += return_obj.purchase.count
+            product.save()
+        all_price = return_obj.purchase.count * product.price
+        user = return_obj.purchase.user
+        user.wallet += all_price
+        user.save()
+        return_obj.delete()
+        return redirect('returns')
+
+
+class ReturnRejectView(View):
+    def post(self, request, return_id):
+        return_obj = Return.objects.get(id=return_id)
+        return_obj.delete()   
+        return redirect('returns')
+
+
+class PurchaseListView(LoginRequiredMixin, ListView):
+    model = Purchase
+    template_name = 'purchases.html'
+    context_object_name = 'purchases'
+    success_url = 'purchases'
+    
+    def get_queryset(self):
+        return Purchase.objects.filter(user__user=self.request.user)
+
+    def post(self, request):
+        product_id = request.POST.get('pk')
+        coun = request.POST.get('count')
+        
+        product = Product.objects.get(pk=product_id)
+        user = Client.objects.get(user=request.user)
+        
+        if product.count_in_storage < coun:
+            messages.error(request, 'Недостаточно товаров на складе')
+            return redirect('purchases')
+        
+        total_cost = product.price * coun
+        if total_cost > user.wallet:
+            messages.error(request, 'У вас недостаточно денег')
+            return redirect('purchases')
+        
+        purchase = Purchase.objects.create(user=user, count=coun)
+        purchase.product.add(product)
+        purchase.save()
+        
+        product.count_in_storage -= coun
+        product.save()
+        
+        user.wallet -= total_cost
+        user.save()
+        
+        messages.success(request, 'Покупка успешно совершена')
+        return redirect('purchases')

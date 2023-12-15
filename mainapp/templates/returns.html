@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>Returns</h1>
+<div class = "ppp2">
+   {% for return_obj in returns %}
+     <div>
+       <h2>{{ return_obj }}</h2>
+       <form action="{% url 'return_confirm' return_obj.pk %}" method="post">
+         {% csrf_token %}
+         <input type="submit" value="Confirm">
+       </form>
+       <form action="{% url 'return_reject' return_obj.pk %}" method="post">
+         {% csrf_token %}
+         <input type="submit" value="Reject">
+       </form>
+     </div>
+   {% endfor %}
+</div>
+{% endblock %}

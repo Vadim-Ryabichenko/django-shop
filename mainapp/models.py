@@ -8,7 +8,7 @@ class Product(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=12, null=True, blank=True)
     count_in_storage = models.IntegerField(null=True, blank=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
 class Purchase(models.Model):
@@ -21,3 +21,4 @@ class Purchase(models.Model):
 class Return(models.Model):
     purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE, null = True, blank = True)
     create_at = models.DateField(auto_now_add=True)
+
