@@ -7,6 +7,7 @@
    {% for return_obj in returns %}
      <div>
        <h2>{{ return_obj }}</h2>
+       {% if request.user.is_superuser %}
        <form action="{% url 'return_confirm' return_obj.pk %}" method="post">
          {% csrf_token %}
          <input type="submit" value="Confirm">
@@ -15,6 +16,7 @@
          {% csrf_token %}
          <input type="submit" value="Reject">
        </form>
+       {% endif %}
      </div>
    {% endfor %}
 </div>

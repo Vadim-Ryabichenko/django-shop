@@ -342,3 +342,23 @@ a.cart .basket__amount {
   display: none;
 }
 }
+
+.main_content h4{
+  text-align: center;
+  color: white;
+}
+
+.contrrainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cont,
+.inf {
+  width: 60%; 
+}
+
+.cont h2{
+  color: #9e4155;
+  text-decoration: overline;
+}

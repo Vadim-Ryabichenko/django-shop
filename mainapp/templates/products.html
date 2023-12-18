@@ -12,7 +12,8 @@
         {% if user.is_authenticated %}
         <form method="POST" action="{% url 'purchases' %}">
             {% csrf_token %}
-            <input type="number" name="Count" min="1" max="{{ product.count_in_storage }}" required>
+            <input type="number" name="count" min="1" max="{{ product.count_in_storage }}" required>
+            <input type="hidden" id = "product.pk" name="pk" value="{{product.pk}}">
             <button type="submit">Buy</button>
         </form>
         {% endif %}

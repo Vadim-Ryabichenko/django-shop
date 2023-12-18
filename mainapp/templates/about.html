@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>Hello, this is a page that contains information about the store</h1>
+<h1>Vremby***Shop or sports coctail shop</h1>
+<div class="contrrainer">
+<div class = "cont">
+<ul>
+    <li><h2>Contact number: 0934586217</h2></li>
+    <li><h2>Administrator name: Vadim</h2></li>
+    <li><h2>Opening hours: 8:00-21:00</h2></li>
+    <li><h2>Closed: Sunday</h2></li>
+    <li><h2>Name of organization: Vremby***Shop</h2></li>
+    <li><h2>Specialization: food, fitness, health</h2></li>
+  </ul>
+</div>
+<div class = "inf">
+  <h2>Description</h2>
+    <h3>Our store specializes in ready-made sports cocktails.
+        Protein shakes are designed to replace the usual diet, but without compromising the body's supply of essential nutrients. Most often they are interested in those who want to lose weight or gain muscle mass. The cocktail tastes good, contains a clearly defined amount of calories, is easily digestible, improves metabolism, and is important for maintaining muscle growth after training and faster recovery.
+        
+        To get the maximum benefit, lets talk about the rules for choosing, preparing and taking such cocktails with a teacher at the “Fitness Academy - Ukraine” of our store.
+        
+        Rules for choosing a ready-made protein shake:
+        
+        Protein is not a drug. However, before use, you should consult a doctor, especially if you have gastrointestinal diseases, allergies to dairy products, kidney and liver diseases. You can take more protein than normal only with regular, intense workouts. Exceeding the norm is dangerous for digestive disorders, skin rashes, mood swings, weight gain, and hormonal imbalance.
+        The advantages of hydrolyzed whey protein are that it is absorbed by the body and begins to perform its functions much faster compared to regular food. In its pure form, this product cannot replace a nutritious diet. Ask your trainer if you should take a protein shake. It will help you choose the best option and load mode.
+        Check out the manufacturing companies. Choose a company that is currently a leader in the sports nutrition or dietary supplement market, has the necessary certification, good reviews, and inspires your trust</h3>
+</div>
+</div>
+<div class = "mainh3">
+<h3>If you have read the information, we invite you to try our <a href="{% url 'products' %}">products</a></h3>
+</div>
+{% endblock %}

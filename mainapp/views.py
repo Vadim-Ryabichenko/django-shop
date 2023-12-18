@@ -7,6 +7,7 @@ from django.shortcuts import render
 from .forms import ProductForm
 from django.shortcuts import redirect
 from django.contrib import messages
+from datetime import datetime, timedelta
 
 
 
@@ -73,7 +74,6 @@ class ReturnListView(LoginRequiredMixin, ListView):
 class ReturnConfirmView(View):
     def post(self, request, return_id):
         return_obj = Return.objects.get(id=return_id)
-        return_obj.purchase.delete()
         for product in return_obj.purchase.product.all():
             product.count_in_storage += return_obj.purchase.count
             product.save()
@@ -81,6 +81,7 @@ class ReturnConfirmView(View):
         user = return_obj.purchase.user
         user.wallet += all_price
         user.save()
+        return_obj.purchase.delete()
         return_obj.delete()
         return redirect('returns')
 
@@ -102,30 +103,24 @@ class PurchaseListView(LoginRequiredMixin, ListView):
         return Purchase.objects.filter(user__user=self.request.user)
 
     def post(self, request):
-        product_id = request.POST.get('pk')
+        pk = request.POST.get('pk')
         coun = request.POST.get('count')
-        
-        product = Product.objects.get(pk=product_id)
+        product = Product.objects.get(pk=pk)
         user = Client.objects.get(user=request.user)
-        
-        if product.count_in_storage < coun:
-            messages.error(request, 'Недостаточно товаров на складе')
+        if product.count_in_storage < int(coun):
+            messages.error(request, 'Not enough products in storage')
             return redirect('purchases')
-        
-        total_cost = product.price * coun
+        total_cost = product.price * int(coun)
         if total_cost > user.wallet:
-            messages.error(request, 'У вас недостаточно денег')
+            messages.error(request, 'You dont have enough money')
             return redirect('purchases')
-        
         purchase = Purchase.objects.create(user=user, count=coun)
         purchase.product.add(product)
         purchase.save()
-        
-        product.count_in_storage -= coun
+        product.count_in_storage -= int(coun)
         product.save()
-        
         user.wallet -= total_cost
         user.save()
-        
-        messages.success(request, 'Покупка успешно совершена')
+        messages.success(request, 'Purchase completed successfully')
         return redirect('purchases')
+    
