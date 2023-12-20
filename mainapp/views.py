@@ -7,7 +7,7 @@ from django.shortcuts import render
 from .forms import ProductForm
 from django.shortcuts import redirect
 from django.contrib import messages
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 
@@ -70,6 +70,22 @@ class ReturnListView(LoginRequiredMixin, ListView):
     queryset = Return.objects.all()
     context_object_name = 'returns'
 
+    def post(self, request):
+        purchase_id = request.POST.get('purchase_id')
+
+        purchase = Purchase.objects.get(pk=purchase_id)
+        now = datetime.now(timezone.utc)
+
+        if (now - purchase.create_at).total_seconds() > 180:
+            messages.error(request, 'Return is no longer possible')
+            return redirect('purchases')
+
+        Return.objects.create(
+            purchase=purchase
+        )
+        messages.success(request, 'Return created successfully. Waiting for admin confirmation.')
+        return redirect('returns')
+
 
 class ReturnConfirmView(View):
     def post(self, request, return_id):
@@ -124,15 +140,4 @@ class PurchaseListView(LoginRequiredMixin, ListView):
         user.save()
         messages.success(request, 'Purchase completed successfully')
 
-        current_time = datetime.now()
-        time_difference = current_time - purchase.create_at
-        if time_difference.total_seconds() > 30:
-            messages.error(request, 'Return is no longer possible')
-            return redirect('purchases')
-        elif request.POST.get('return_button') and time_difference.total_seconds() < 180:
-            return_obj = Return(purchase=purchase)
-            return_obj.save()
-            messages.success(request, 'Return created successfully. Waiting for admin confirmation.')
         return redirect('purchases')
-   
-

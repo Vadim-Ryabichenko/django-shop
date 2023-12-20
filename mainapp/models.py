@@ -13,7 +13,7 @@ class Product(models.Model):
 
 class Purchase(models.Model):
     user = models.ForeignKey(Client, on_delete=models.CASCADE, null = True, blank = True)
-    create_at = models.DateField(auto_now_add=True)
+    create_at = models.DateTimeField(auto_now_add=True)
     product = models.ManyToManyField(Product)
     count = models.IntegerField(null=True, blank=True)
 
@@ -23,7 +23,7 @@ class Purchase(models.Model):
 
 class Return(models.Model):
     purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE, null = True, blank = True)
-    create_at = models.DateField(auto_now_add=True)
+    create_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return f"{self.purchase.user} - {self.create_at}"

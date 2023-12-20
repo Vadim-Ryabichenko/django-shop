@@ -18,7 +18,7 @@
             <a href="{% url 'returns' %}">|Returns|</a>
             <a href="{% url 'products' %}">|Products|</a>
             <div class="basket">
-                <a href="{% url 'purchases' %}" class="cart"><span class="basket__counter">Purchases</span></a>
+                <a href="{% url 'purchases' %}" class="cart"><span class="basket__counter">Purchases</span>Basket</a>
             </div>
             {% if request.user.is_superuser %}
             <a href="{% url 'create_product' %}">|Create product|</a>

@@ -289,16 +289,15 @@ a.cart {
 	width: 50px;
 	height: 50px;
 	border-radius: 36px;
-	font-size: 18px;
+	font-size: 20px;
 	text-align: center;
-	color: #616161;
+	color: #edc111;
 	text-decoration: none;
 	position: relative;
   right: 0;
   top: 0;
 	display: block;
-	background: #9e4155 url(http://images.vfl.ru/ii/1484930184/14435803/15757225.png
-) center no-repeat;
+	background: #9e4155;
 	background-size: 30px;
 }
 
@@ -316,31 +315,6 @@ a.cart .basket__counter {
 	right: -7px;
 	margin: auto;
 	background: #ffab00;
-}
-
-a.cart .basket__amount {
-  width: 200px;
-  height: 30px;
-  position: absolute;
-  bottom: 0;
-  left: 20px;
-  color: white;
-}
-
-@media only screen and (max-width : 576px){
-  .basket{
-  width: 50px;
-    background: none;
-  }
-  .basket__content{
-    display: none;
-  }
-  .basket__amount{
-    display: none;
-  }
-  .basket:hover .basket__content{
-  display: none;
-}
 }
 
 .main_content h4{
