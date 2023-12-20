@@ -15,8 +15,8 @@
         <h3>{{ purchase.create_at }}</h3>
         <form method="POST" action="{% url 'returns' %}">
             {% csrf_token %}
-            <input type="hidden" id = "purchase.pk" name="pk" value="{{purchase.pk}}">
-            <button type="submit">Return</button>
+            <input type="hidden" id = "return_obj.pk" name="pk" value="{{return_obj.pk}}">
+            <button name = "return_button" type="submit">Return</button>
         </form>
     </div>  
     {% endfor %}
