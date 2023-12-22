@@ -1,0 +1,26 @@
+[
+{
+  "model": "accountsapp.client",
+  "pk": 1,
+  "fields": {
+    "user": 3,
+    "wallet": "3111.00"
+  }
+},
+{
+  "model": "accountsapp.client",
+  "pk": 2,
+  "fields": {
+    "user": 2,
+    "wallet": "3436.00"
+  }
+},
+{
+  "model": "accountsapp.client",
+  "pk": 3,
+  "fields": {
+    "user": 5,
+    "wallet": "9655.00"
+  }
+}
+]

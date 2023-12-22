@@ -1,0 +1,138 @@
+[
+{
+  "model": "mainapp.product",
+  "pk": 2,
+  "fields": {
+    "name": "True Whey - GymBeam strawberry",
+    "text": "True Whey Protein is a pure whey protein concentrate that is produced using gentle filtration processes such as cross-flow filtration. The result is a well-digested protein powder with an exceptional absorption rate and a naturally high content of biologically valuable proteins. This makes it an ideal nutritional supplement for the growth and maintenance of muscle mass, which is especially useful during a diet. Another benefit is that it supports normal bone health.",
+    "price": "1010.00",
+    "count_in_storage": 16
+  }
+},
+{
+  "model": "mainapp.product",
+  "pk": 3,
+  "fields": {
+    "name": "BioLine gainer",
+    "text": "BioLine™ Gainer Rapid Anabolic Growth Formula is a powerful blend of carbohydrates that provide pure energy and a mass-gaining tool for your body, and a formula high in +vitamins, calcium and creatine for accelerated mass gain.",
+    "price": "820.00",
+    "count_in_storage": 4
+  }
+},
+{
+  "model": "mainapp.product",
+  "pk": 4,
+  "fields": {
+    "name": "TREC NUTRITION ISOTONIC SPORTS",
+    "text": "ISOTONIC SPORT is a complex of energy components, minerals and vitamins selected for rapid restoration of the body's water balance. Carbohydrate-electrolyte solutions enhance water absorption during physical exertion and help maintain endurance during long endurance exercises. ISOTONIC SPORT contains the minerals calcium sodium, chloride and magnesium, which help maintain electrolyte balance. Also, ISOTONIC SPORT contains L-carnitine, taurine and a complex of vitamins of group B, including vitamin B6, which will allow you to restore a high level of energy faster. Suitable for endurance athletes and power sports.",
+    "price": "1350.00",
+    "count_in_storage": 3
+  }
+},
+{
+  "model": "mainapp.product",
+  "pk": 5,
+  "fields": {
+    "name": "banana flex predtren",
+    "text": "hohohohohoh narmal",
+    "price": "234.00",
+    "count_in_storage": 17
+  }
+},
+{
+  "model": "mainapp.product",
+  "pk": 9,
+  "fields": {
+    "name": "Apple BCA",
+    "text": "BCA huge",
+    "price": "512.00",
+    "count_in_storage": 14
+  }
+},
+{
+  "model": "mainapp.product",
+  "pk": 10,
+  "fields": {
+    "name": "Pineapple predtren",
+    "text": "for fast busting",
+    "price": "120.00",
+    "count_in_storage": 32
+  }
+},
+{
+  "model": "mainapp.product",
+  "pk": 11,
+  "fields": {
+    "name": "fresh napalm",
+    "text": "orange predtren concentrat",
+    "price": "260.00",
+    "count_in_storage": 32
+  }
+},
+{
+  "model": "mainapp.product",
+  "pk": 12,
+  "fields": {
+    "name": "Super coconut coctail",
+    "text": "after training",
+    "price": "115.00",
+    "count_in_storage": 18
+  }
+},
+{
+  "model": "mainapp.purchase",
+  "pk": 72,
+  "fields": {
+    "user": 1,
+    "create_at": "2023-12-20T00:00:00Z",
+    "count": 1,
+    "product": [
+      12
+    ]
+  }
+},
+{
+  "model": "mainapp.purchase",
+  "pk": 73,
+  "fields": {
+    "user": 1,
+    "create_at": "2023-12-20T00:00:00Z",
+    "count": 1,
+    "product": [
+      10
+    ]
+  }
+},
+{
+  "model": "mainapp.purchase",
+  "pk": 74,
+  "fields": {
+    "user": 1,
+    "create_at": "2023-12-20T15:28:34.136Z",
+    "count": 1,
+    "product": [
+      5
+    ]
+  }
+},
+{
+  "model": "mainapp.purchase",
+  "pk": 78,
+  "fields": {
+    "user": 1,
+    "create_at": "2023-12-20T16:09:52.209Z",
+    "count": 1,
+    "product": [
+      10
+    ]
+  }
+},
+{
+  "model": "mainapp.return",
+  "pk": 72,
+  "fields": {
+    "purchase": 78,
+    "create_at": "2023-12-20T16:09:54.731Z"
+  }
+}
+]
