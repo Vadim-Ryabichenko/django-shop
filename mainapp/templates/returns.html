@@ -4,15 +4,15 @@
 {% block content %}
 <h1>Returns</h1>
 <div class = "ppp2">
-   {% for return_obj in returns %}
+   {% for return in all_returns_list %}
      <div>
-       <h2>{{ return_obj }}</h2>
+       <h2>{{ return }}</h2>
        {% if request.user.is_superuser %}
-       <form action="{% url 'return_confirm' return_obj.pk %}" method="post">
+       <form action="{% url 'return_confirm' return.pk %}" method="post">
          {% csrf_token %}
          <input type="submit" value="Confirm">
        </form>
-       <form action="{% url 'return_reject' return_obj.pk %}" method="post">
+       <form action="{% url 'return_reject' return.pk %}" method="post">
          {% csrf_token %}
          <input type="submit" value="Reject">
        </form>

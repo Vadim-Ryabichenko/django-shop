@@ -6,7 +6,6 @@ class Command(BaseCommand):
     help = "All return requests must be refused."
 
     def handle(self, *args, **options):
-        returns = Return.objects.all()
-        if returns:
-            returns.delete()
+        if Return.objects.exists(): 
+            Return.objects.all().delete()
         print('returns are clear')

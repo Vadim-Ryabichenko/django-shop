@@ -8,6 +8,7 @@ from .forms import ProductForm
 from django.shortcuts import redirect
 from django.contrib import messages
 from datetime import datetime, timezone
+from django.db.models import F
 
 
 
@@ -22,9 +23,9 @@ class AboutView(TemplateView):
 class ProductListView(ListView):
     model = Product
     template_name = 'products.html'
-    extra_context = {'products' : Product.objects.all()}
     queryset = Product.objects.all()
     success_url = 'products'
+    context_object_name = 'all_product_list'
 
 
 class ProductPageView(LoginRequiredMixin, View):
@@ -68,7 +69,7 @@ class ReturnListView(LoginRequiredMixin, ListView):
     model = Return
     template_name = 'returns.html'
     queryset = Return.objects.all()
-    context_object_name = 'returns'
+    context_object_name = 'all_returns_list'
 
     def post(self, request):
         purchase_id = request.POST.get('purchase_id')
@@ -91,11 +92,11 @@ class ReturnConfirmView(View):
     def post(self, request, return_id):
         return_obj = Return.objects.get(id=return_id)
         for product in return_obj.purchase.product.all():
-            product.count_in_storage += return_obj.purchase.count
+            product.count_in_storage = F('count_in_storage') + return_obj.purchase.count
             product.save()
         all_price = return_obj.purchase.count * product.price
         user = return_obj.purchase.user
-        user.wallet += all_price
+        user.wallet = F('wallet') + all_price
         user.save()
         return_obj.purchase.delete()
         return_obj.delete()
@@ -112,7 +113,7 @@ class ReturnRejectView(View):
 class PurchaseListView(LoginRequiredMixin, ListView):
     model = Purchase
     template_name = 'purchases.html'
-    context_object_name = 'purchases'
+    context_object_name = 'all_purchases_list'
     success_url = 'purchases'
     
     def get_queryset(self):
@@ -134,9 +135,9 @@ class PurchaseListView(LoginRequiredMixin, ListView):
         purchase.product.add(product)
         purchase.create_at = datetime.now()
         purchase.save()
-        product.count_in_storage -= int(coun)
+        product.count_in_storage = F('count_in_storage') - int(coun)
         product.save()
-        user.wallet -= total_cost
+        user.wallet = F('wallet') - total_cost
         user.save()
         messages.success(request, 'Purchase completed successfully')
 
