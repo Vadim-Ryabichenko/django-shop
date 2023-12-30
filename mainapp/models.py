@@ -11,6 +11,7 @@ class Product(models.Model):
     def __str__(self) -> str:
         return self.name
 
+
 class Purchase(models.Model):
     user = models.ForeignKey(Client, on_delete=models.CASCADE, null = True, blank = True)
     create_at = models.DateTimeField(auto_now_add=True)
@@ -20,6 +21,7 @@ class Purchase(models.Model):
     def __str__(self) -> str:
         product_names = ', '.join([product.name for product in self.product.all()])
         return f"{self.user} - {product_names}"
+
 
 class Return(models.Model):
     purchase = models.ForeignKey(Purchase, on_delete=models.CASCADE, null = True, blank = True)
