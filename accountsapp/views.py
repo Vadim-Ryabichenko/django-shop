@@ -3,6 +3,9 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, TemplateView
 from django.urls import reverse_lazy
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
 
 
 class Register(CreateView):
@@ -30,3 +33,20 @@ class Login(LoginView):
 class Logout(LoginRequiredMixin, LogoutView):
     template_name = 'logout.html'
     success_url = reverse_lazy('login_page')
+
+
+class RembyAuthToken(ObtainAuthToken):
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'attention': f'{user.username}, this is now your new token',
+            'token': token.key,
+            'user_id': user.pk,
+            'user_first_name': user.first_name,
+            'user_last_name': user.last_name,
+        })

@@ -9,7 +9,12 @@ from django.shortcuts import redirect
 from django.contrib import messages
 from datetime import datetime, timezone
 from django.db.models import F
-
+from .serializers import ProductSerializer, ReturnSerializer, PurchaseSerializer, ClientSerializer
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from mainapp.permissions import ProductPermission
+from .filters import UserFilterBackend
 
 
 class MainView(TemplateView):
@@ -142,3 +147,64 @@ class PurchaseListView(LoginRequiredMixin, ListView):
         messages.success(request, 'Purchase completed successfully')
 
         return redirect('purchases')
+
+
+class ProductModelViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    permission_classes = [ProductPermission]
+    
+
+class PurchaseModelViewSet(ModelViewSet):
+    serializer_class = PurchaseSerializer
+    permission_classes = [IsAuthenticated]
+    queryset = Purchase.objects.all()
+    filter_backends = [UserFilterBackend]
+
+    def create(self, request, *args, **kwargs):
+        product_id = request.data['product'][0].get('id')
+        count = int(request.data.get('count'))
+        product = Product.objects.get(pk=product_id)
+        user = Client.objects.get(user=request.data['user']['user'])
+        if product.count_in_storage < int(count):
+            return Response({'error': 'Not enough products in storage'})
+        total_cost = product.price * int(count)
+        if total_cost > user.wallet:
+            return Response({'error': 'You dont have enough money'})
+        purchase = Purchase.objects.create(user=user, count=count)
+        purchase.product.add(product)
+        purchase.created_at = datetime.now()
+        purchase.save()
+        product.count_in_storage = F('count_in_storage') - int(count)
+        product.save()
+        user.wallet = F('wallet') - total_cost
+        user.save()
+        return Response({'message': 'Purchase completed successfully'})
+
+
+class ReturnModelViewSet(ModelViewSet):
+    queryset = Return.objects.all()
+    serializer_class = ReturnSerializer
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        purchase_id = request.data['purchase'].get('id')
+        purchase = Purchase.objects.get(pk=purchase_id)
+        now = datetime.now(timezone.utc)
+        
+        if (now - purchase.create_at).total_seconds() > 180:
+            return Response({'detail': 'Return is no longer possible'})
+
+        Return.objects.create(purchase=purchase)
+
+        return Response({'detail': 'Return created successfully. Waiting for admin confirmation.'})
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class ClientModelViewSet(ModelViewSet):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer

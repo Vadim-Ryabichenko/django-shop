@@ -1,8 +1,18 @@
 from .views import MainView, AboutView, ProductListView, ProductPageView, ProductCreateView, ProductUpdateView, ReturnListView, ReturnConfirmView, ReturnRejectView, PurchaseListView
-from django.urls import path
+from django.urls import path, include
+from mainapp.views import ProductModelViewSet, PurchaseModelViewSet, ReturnModelViewSet, ClientModelViewSet
+from rest_framework import routers
+
+
+router = routers.SimpleRouter()
+router.register('products', ProductModelViewSet)
+router.register('purchas', PurchaseModelViewSet)
+router.register('returns', ReturnModelViewSet)
+router.register('clients', ClientModelViewSet)
 
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('', MainView.as_view(), name = 'mainpage'),
     path('about/', AboutView.as_view(), name = 'about_shop'),
     path('products/', ProductListView.as_view(), name = 'products'),
