@@ -86,6 +86,7 @@ class ReturnListView(LoginRequiredMixin, ListView):
             messages.error(request, 'Return is no longer possible')
             return redirect('purchases')
 
+
         Return.objects.create(
             purchase=purchase
         )

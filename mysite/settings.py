@@ -46,10 +46,10 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -85,6 +85,9 @@ DATABASES = {
         'PASSWORD': 'vadim1999',
         'HOST': 'localhost',
         'PORT': '5432',
+        'TEST': {
+            'NAME': 'vadimtestdatabase',
+        },
     }
 }
 
@@ -142,3 +145,4 @@ REST_FRAMEWORK = {
         'accountsapp.authentication.RembyTokenAuthentication',
     ]
 }
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'

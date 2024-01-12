@@ -12,7 +12,7 @@ router.register('clients', ClientModelViewSet)
 
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('/', include(router.urls)),
     path('', MainView.as_view(), name = 'mainpage'),
     path('about/', AboutView.as_view(), name = 'about_shop'),
     path('products/', ProductListView.as_view(), name = 'products'),
